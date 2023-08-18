@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:integrador/constants/stock.dart';
-import 'package:integrador/model/reservable.dart';
+import 'package:integrador/model/item.dart';
 import 'package:integrador/pages/navigation.dart';
 import 'package:integrador/widgets/reserva.dart';
 
@@ -10,6 +10,8 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    final stock = ref.watch(stockProvider).stock;
 
     return SafeArea(child:
     Scaffold(
@@ -20,10 +22,10 @@ class HomePage extends ConsumerWidget {
           child: ListView(
             children: stock.map((reserva) {
               return Reserva(
-    item: ref.watch(reserva),
-    onTap: ()=> Navigation.bookPage(context,reserva)
-    );
-    }).toList(),
+                  item: reserva,
+                  onTap: ()=> Navigation.bookPage(context,reserva)
+              );
+            }).toList(),
           ),
         ),
         ),

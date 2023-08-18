@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:integrador/constants/clientes.dart';
+import 'package:integrador/constants/stock.dart';
 import 'package:integrador/extensions/date-format.dart';
-import 'package:integrador/model/reservable.dart';
+import 'package:integrador/model/item.dart';
 import 'package:integrador/widgets/creditos_y_reservas.dart';
 import 'package:integrador/widgets/iconWithString.dart';
 
@@ -17,17 +18,20 @@ class DetailPage extends ConsumerStatefulWidget {
 class BookPageState extends ConsumerState<DetailPage> {
   String reservarPor = clients.first;
 
+
+
   @override
   Widget build(BuildContext context) {
-    StateProvider<Reservable> itemProvider = ModalRoute.of(context)!.settings.arguments as StateProvider<Reservable>;
-    Reservable item = ref.watch(itemProvider);
+    final stock = ref.watch(stockProvider).stock;
+
+    Item item = ModalRoute.of(context)!.settings.arguments as Item;
 
     void action(){
       if(item.isAvailable()){
-        ref.read(itemProvider.notifier).state = item.reservar(reservarPor);
+        ref.read(stockProvider.notifier).reservar(item, reservarPor);
       }
       else{
-        ref.read(itemProvider.notifier).state = item.devolver();
+        ref.read(stockProvider.notifier).devolver(item);
       }
       setState(() {
         reservarPor = clients.first;

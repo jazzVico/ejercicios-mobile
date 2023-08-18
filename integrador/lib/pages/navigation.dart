@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:integrador/model/reservable.dart';
+import 'package:integrador/model/item.dart';
 import 'package:integrador/pages/detail_page.dart';
 
 class Navigation{
   static const String routeBookPage = 'book-page';
 
-  static void  bookPage(BuildContext context, StateProvider<Reservable> reservable){
+  static void  bookPage(BuildContext context, Item reservable){
     Navigator.of(context).pushNamed(routeBookPage, arguments: reservable);
   }
 
